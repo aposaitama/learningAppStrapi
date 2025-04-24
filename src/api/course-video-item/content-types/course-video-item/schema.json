@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_video_items",
+  "info": {
+    "singularName": "course-video-item",
+    "pluralName": "course-video-items",
+    "displayName": "CourseVideoItem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "videoTitle": {
+      "type": "string"
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "videoAvailabilityStatus": {
+      "type": "enumeration",
+      "enum": [
+        "requiresPurchase",
+        "available"
+      ]
+    },
+    "course_item": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course-item.course-item",
+      "inversedBy": "courseVideoItems"
+    },
+    "videoDurationInSeconds": {
+      "type": "integer"
+    }
+  }
+}

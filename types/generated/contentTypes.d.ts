@@ -369,6 +369,121 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
+  collectionName: 'categories';
+  info: {
+    displayName: 'Category';
+    pluralName: 'categories';
+    singularName: 'category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    categoryTitle: Schema.Attribute.String;
+    course_items: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-item.course-item'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category.category'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCourseItemCourseItem extends Struct.CollectionTypeSchema {
+  collectionName: 'course_items';
+  info: {
+    description: '';
+    displayName: 'CourseItem';
+    pluralName: 'course-items';
+    singularName: 'course-item';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
+    courseAuthor: Schema.Attribute.String;
+    courseDescription: Schema.Attribute.String;
+    courseImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    coursePrice: Schema.Attribute.Decimal;
+    courseTitle: Schema.Attribute.String;
+    courseType: Schema.Attribute.Enumeration<
+      ['BESTSELLER', 'NEW ARIVAL', 'POPULAR']
+    >;
+    courseVideoItems: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-video-item.course-video-item'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-item.course-item'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    totalCourseDurationInSeconds: Schema.Attribute.Integer;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCourseVideoItemCourseVideoItem
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'course_video_items';
+  info: {
+    description: '';
+    displayName: 'CourseVideoItem';
+    pluralName: 'course-video-items';
+    singularName: 'course-video-item';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    course_item: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::course-item.course-item'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-video-item.course-video-item'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    video: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    videoAvailabilityStatus: Schema.Attribute.Enumeration<
+      ['requiresPurchase', 'available']
+    >;
+    videoDurationInSeconds: Schema.Attribute.Integer;
+    videoTitle: Schema.Attribute.String;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -878,6 +993,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::category.category': ApiCategoryCategory;
+      'api::course-item.course-item': ApiCourseItemCourseItem;
+      'api::course-video-item.course-video-item': ApiCourseVideoItemCourseVideoItem;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

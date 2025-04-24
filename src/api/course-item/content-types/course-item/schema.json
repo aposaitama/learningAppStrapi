@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_items",
+  "info": {
+    "singularName": "course-item",
+    "pluralName": "course-items",
+    "displayName": "CourseItem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "courseImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "courseTitle": {
+      "type": "string"
+    },
+    "coursePrice": {
+      "type": "decimal"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "course_items"
+    },
+    "courseAuthor": {
+      "type": "string"
+    },
+    "courseType": {
+      "type": "enumeration",
+      "enum": [
+        "BESTSELLER",
+        "NEW ARIVAL",
+        "POPULAR"
+      ]
+    },
+    "courseVideoItems": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course-video-item.course-video-item",
+      "mappedBy": "course_item"
+    },
+    "totalCourseDurationInSeconds": {
+      "type": "integer"
+    },
+    "courseDescription": {
+      "type": "string"
+    }
+  }
+}
