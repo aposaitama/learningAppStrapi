@@ -67,6 +67,39 @@
     },
     "userPhoneNumber": {
       "type": "string"
+    },
+    "user_purchased_courses": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::course-item.course-item",
+      "mappedBy": "users"
+    },
+    "xxxxx": {
+      "type": "string"
+    },
+    "favourite_items": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::course-item.course-item",
+      "inversedBy": "favourite_users"
+    },
+    "completed_course_videos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::course-video-item.course-video-item",
+      "inversedBy": "completed_course_users"
+    },
+    "userLearningStreak": {
+      "type": "integer"
+    },
+    "lastCheckedDate": {
+      "type": "date"
+    },
+    "creditCards": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::credit-card.credit-card",
+      "inversedBy": "users_cards"
     }
   }
 }

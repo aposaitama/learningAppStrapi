@@ -56,6 +56,18 @@
     },
     "courseDescription": {
       "type": "string"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_purchased_courses"
+    },
+    "favourite_users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "favourite_items"
     }
   }
 }

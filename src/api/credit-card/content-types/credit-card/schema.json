@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "credit_cards",
+  "info": {
+    "singularName": "credit-card",
+    "pluralName": "credit-cards",
+    "displayName": "CreditCard"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "cardNumber": {
+      "type": "string"
+    },
+    "expDate": {
+      "type": "string"
+    },
+    "users_cards": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "creditCards"
+    }
+  }
+}

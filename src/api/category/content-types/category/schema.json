@@ -4,7 +4,8 @@
   "info": {
     "singularName": "category",
     "pluralName": "categories",
-    "displayName": "Category"
+    "displayName": "Category",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -18,6 +19,47 @@
       "relation": "oneToMany",
       "target": "api::course-item.course-item",
       "mappedBy": "category"
+    },
+    "hexTitleTextColor": {
+      "type": "enumeration",
+      "enum": [
+        "#A3A9FF",
+        "#A5CDB6",
+        "#A19200",
+        "#A000A3"
+      ]
+    },
+    "hexBackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "#F0F4F8",
+        "#E6F7F1",
+        "#FFF3E6",
+        "#F9F0FF",
+        "#FDF6E3",
+        "#EAF6FF"
+      ]
+    },
+    "categoryImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "hexTextBackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "#CEECFE",
+        "#D1F7EC",
+        "#FEF3C7",
+        "#FFD9E8",
+        "#E3D7FF"
+      ]
     }
   }
 }

@@ -40,6 +40,12 @@
     },
     "videoDurationInSeconds": {
       "type": "integer"
+    },
+    "completed_course_users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "completed_course_videos"
     }
   }
 }

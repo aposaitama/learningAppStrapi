@@ -372,6 +372,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
+    description: '';
     displayName: 'Category';
     pluralName: 'categories';
     singularName: 'category';
@@ -380,6 +381,9 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    categoryImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     categoryTitle: Schema.Attribute.String;
     course_items: Schema.Attribute.Relation<
       'oneToMany',
@@ -388,6 +392,15 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    hexBackgroundColor: Schema.Attribute.Enumeration<
+      ['#F0F4F8', '#E6F7F1', '#FFF3E6', '#F9F0FF', '#FDF6E3', '#EAF6FF']
+    >;
+    hexTextBackgroundColor: Schema.Attribute.Enumeration<
+      ['#CEECFE', '#D1F7EC', '#FEF3C7', '#FFD9E8', '#E3D7FF']
+    >;
+    hexTitleTextColor: Schema.Attribute.Enumeration<
+      ['#A3A9FF', '#A5CDB6', '#A19200', '#A000A3']
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -431,6 +444,10 @@ export interface ApiCourseItemCourseItem extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    favourite_users: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -442,6 +459,10 @@ export interface ApiCourseItemCourseItem extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    users: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -458,6 +479,10 @@ export interface ApiCourseVideoItemCourseVideoItem
     draftAndPublish: true;
   };
   attributes: {
+    completed_course_users: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
     course_item: Schema.Attribute.Relation<
       'manyToOne',
       'api::course-item.course-item'
@@ -481,6 +506,39 @@ export interface ApiCourseVideoItemCourseVideoItem
     >;
     videoDurationInSeconds: Schema.Attribute.Integer;
     videoTitle: Schema.Attribute.String;
+  };
+}
+
+export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
+  collectionName: 'credit_cards';
+  info: {
+    displayName: 'CreditCard';
+    pluralName: 'credit-cards';
+    singularName: 'credit-card';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cardNumber: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    expDate: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::credit-card.credit-card'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_cards: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -942,16 +1000,29 @@ export interface PluginUsersPermissionsUser
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    completed_course_videos: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::course-video-item.course-video-item'
+    >;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    creditCards: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::credit-card.credit-card'
+    >;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    favourite_items: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::course-item.course-item'
+    >;
+    lastCheckedDate: Schema.Attribute.Date;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -973,6 +1044,11 @@ export interface PluginUsersPermissionsUser
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_purchased_courses: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::course-item.course-item'
+    >;
+    userLearningStreak: Schema.Attribute.Integer;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
@@ -980,6 +1056,7 @@ export interface PluginUsersPermissionsUser
         minLength: 3;
       }>;
     userPhoneNumber: Schema.Attribute.String;
+    xxxxx: Schema.Attribute.String;
   };
 }
 
@@ -996,6 +1073,7 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::course-item.course-item': ApiCourseItemCourseItem;
       'api::course-video-item.course-video-item': ApiCourseVideoItemCourseVideoItem;
+      'api::credit-card.credit-card': ApiCreditCardCreditCard;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
