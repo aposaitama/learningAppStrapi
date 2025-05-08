@@ -455,6 +455,7 @@ export interface ApiCourseItemCourseItem extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    salesCount: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     totalCourseDurationInSeconds: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -536,6 +537,43 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     users_cards: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiMessageNotificationMessageNotification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'message_notifications';
+  info: {
+    description: '';
+    displayName: 'MessageNotification';
+    pluralName: 'message-notifications';
+    singularName: 'message-notification';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::message-notification.message-notification'
+    > &
+      Schema.Attribute.Private;
+    notificationAuthor: Schema.Attribute.String;
+    notificationAuthorImageUrl: Schema.Attribute.String;
+    notificationDescription: Schema.Attribute.String;
+    notificationImageUrl: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users: Schema.Attribute.Relation<
       'manyToMany',
       'plugin::users-permissions.user'
     >;
@@ -1029,6 +1067,10 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    message_notifications: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::message-notification.message-notification'
+    >;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
@@ -1074,6 +1116,7 @@ declare module '@strapi/strapi' {
       'api::course-item.course-item': ApiCourseItemCourseItem;
       'api::course-video-item.course-video-item': ApiCourseVideoItemCourseVideoItem;
       'api::credit-card.credit-card': ApiCreditCardCreditCard;
+      'api::message-notification.message-notification': ApiMessageNotificationMessageNotification;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

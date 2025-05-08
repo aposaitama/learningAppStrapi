@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "message_notifications",
+  "info": {
+    "singularName": "message-notification",
+    "pluralName": "message-notifications",
+    "displayName": "MessageNotification",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "notificationAuthor": {
+      "type": "string"
+    },
+    "notificationDescription": {
+      "type": "string"
+    },
+    "notificationAuthorImageUrl": {
+      "type": "string"
+    },
+    "notificationImageUrl": {
+      "type": "string"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "message_notifications"
+    }
+  }
+}

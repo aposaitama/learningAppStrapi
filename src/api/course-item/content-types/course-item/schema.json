@@ -68,6 +68,10 @@
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "mappedBy": "favourite_items"
+    },
+    "salesCount": {
+      "default": 0,
+      "type": "integer"
     }
   }
 }
