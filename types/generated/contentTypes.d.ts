@@ -1061,6 +1061,8 @@ export interface PluginUsersPermissionsUser
       'api::course-item.course-item'
     >;
     lastCheckedDate: Schema.Attribute.Date;
+    lastTimeCheckout: Schema.Attribute.Date;
+    learnedToday: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1083,6 +1085,10 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    totallyLearningDays: Schema.Attribute.Integer &
+      Schema.Attribute.DefaultTo<0>;
+    totallyLearningHours: Schema.Attribute.Decimal &
+      Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -106,6 +106,21 @@
       "relation": "manyToMany",
       "target": "api::message-notification.message-notification",
       "inversedBy": "users"
+    },
+    "totallyLearningDays": {
+      "type": "integer",
+      "default": 0
+    },
+    "totallyLearningHours": {
+      "type": "decimal",
+      "default": 0
+    },
+    "learnedToday": {
+      "type": "decimal",
+      "default": 0
+    },
+    "lastTimeCheckout": {
+      "type": "date"
     }
   }
 }

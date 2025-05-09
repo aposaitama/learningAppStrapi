@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-05-08T15:23:00.926Z"
+    "x-generation-date": "2025-05-09T10:20:40.023Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -5612,6 +5612,21 @@
                                 }
                               }
                             },
+                            "totallyLearningDays": {
+                              "type": "integer"
+                            },
+                            "totallyLearningHours": {
+                              "type": "number",
+                              "format": "float"
+                            },
+                            "learnedToday": {
+                              "type": "number",
+                              "format": "float"
+                            },
+                            "lastTimeCheckout": {
+                              "type": "string",
+                              "format": "date"
+                            },
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"
@@ -7576,6 +7591,21 @@
                                       }
                                     }
                                   }
+                                },
+                                "totallyLearningDays": {
+                                  "type": "integer"
+                                },
+                                "totallyLearningHours": {
+                                  "type": "number",
+                                  "format": "float"
+                                },
+                                "learnedToday": {
+                                  "type": "number",
+                                  "format": "float"
+                                },
+                                "lastTimeCheckout": {
+                                  "type": "string",
+                                  "format": "date"
                                 },
                                 "createdAt": {
                                   "type": "string",
@@ -9831,6 +9861,21 @@
                               }
                             }
                           },
+                          "totallyLearningDays": {
+                            "type": "integer"
+                          },
+                          "totallyLearningHours": {
+                            "type": "number",
+                            "format": "float"
+                          },
+                          "learnedToday": {
+                            "type": "number",
+                            "format": "float"
+                          },
+                          "lastTimeCheckout": {
+                            "type": "string",
+                            "format": "date"
+                          },
                           "createdAt": {
                             "type": "string",
                             "format": "date-time"
@@ -11812,6 +11857,21 @@
                     }
                   }
                 },
+                "totallyLearningDays": {
+                  "type": "integer"
+                },
+                "totallyLearningHours": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "learnedToday": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "lastTimeCheckout": {
+                  "type": "string",
+                  "format": "date"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -13643,6 +13703,21 @@
                       }
                     }
                   }
+                },
+                "totallyLearningDays": {
+                  "type": "integer"
+                },
+                "totallyLearningHours": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "learnedToday": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "lastTimeCheckout": {
+                  "type": "string",
+                  "format": "date"
                 },
                 "createdAt": {
                   "type": "string",
