@@ -428,6 +428,9 @@ export interface ApiCourseItemCourseItem extends Struct.CollectionTypeSchema {
   attributes: {
     category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
     courseAuthor: Schema.Attribute.String;
+    courseColor: Schema.Attribute.Enumeration<
+      ['#A3A9FF', '#A5CDB6', '#A19200', '#A000A3']
+    >;
     courseDescription: Schema.Attribute.String;
     courseImage: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
@@ -538,6 +541,42 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     users_cards: Schema.Attribute.Relation<
       'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiLocalNotificationLocalNotification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'local_notifications';
+  info: {
+    description: '';
+    displayName: 'LocalNotification';
+    pluralName: 'local-notifications';
+    singularName: 'local-notification';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::local-notification.local-notification'
+    > &
+      Schema.Attribute.Private;
+    notificationType: Schema.Attribute.Enumeration<['card', 'info']>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -1037,6 +1076,7 @@ export interface PluginUsersPermissionsUser
     draftAndPublish: false;
   };
   attributes: {
+    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     completed_course_videos: Schema.Attribute.Relation<
       'manyToMany',
@@ -1060,9 +1100,15 @@ export interface PluginUsersPermissionsUser
       'manyToMany',
       'api::course-item.course-item'
     >;
+    isAllUserDataEntered: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     lastCheckedDate: Schema.Attribute.Date;
     lastTimeCheckout: Schema.Attribute.Date;
     learnedToday: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    local_notifications: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::local-notification.local-notification'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1078,6 +1124,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    paymentPassword: Schema.Attribute.String;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1096,7 +1143,8 @@ export interface PluginUsersPermissionsUser
       'manyToMany',
       'api::course-item.course-item'
     >;
-    userLearningStreak: Schema.Attribute.Integer;
+    userLearningStreak: Schema.Attribute.Integer &
+      Schema.Attribute.DefaultTo<0>;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
@@ -1104,7 +1152,6 @@ export interface PluginUsersPermissionsUser
         minLength: 3;
       }>;
     userPhoneNumber: Schema.Attribute.String;
-    xxxxx: Schema.Attribute.String;
   };
 }
 
@@ -1122,6 +1169,7 @@ declare module '@strapi/strapi' {
       'api::course-item.course-item': ApiCourseItemCourseItem;
       'api::course-video-item.course-video-item': ApiCourseVideoItemCourseVideoItem;
       'api::credit-card.credit-card': ApiCreditCardCreditCard;
+      'api::local-notification.local-notification': ApiLocalNotificationLocalNotification;
       'api::message-notification.message-notification': ApiMessageNotificationMessageNotification;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

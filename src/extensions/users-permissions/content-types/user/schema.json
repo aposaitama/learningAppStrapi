@@ -74,7 +74,7 @@
       "target": "api::course-item.course-item",
       "mappedBy": "users"
     },
-    "xxxxx": {
+    "paymentPassword": {
       "type": "string"
     },
     "favourite_items": {
@@ -90,7 +90,8 @@
       "inversedBy": "completed_course_users"
     },
     "userLearningStreak": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "lastCheckedDate": {
       "type": "date"
@@ -121,6 +122,27 @@
     },
     "lastTimeCheckout": {
       "type": "date"
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "local_notifications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::local-notification.local-notification",
+      "mappedBy": "users_permissions_user"
+    },
+    "isAllUserDataEntered": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

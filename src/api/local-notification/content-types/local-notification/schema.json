@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "local_notifications",
+  "info": {
+    "singularName": "local-notification",
+    "pluralName": "local-notifications",
+    "displayName": "LocalNotification",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "body": {
+      "type": "text"
+    },
+    "date": {
+      "type": "datetime"
+    },
+    "notificationType": {
+      "type": "enumeration",
+      "enum": [
+        "card",
+        "info"
+      ]
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "local_notifications"
+    }
+  }
+}

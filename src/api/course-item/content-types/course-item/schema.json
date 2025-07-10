@@ -72,6 +72,15 @@
     "salesCount": {
       "default": 0,
       "type": "integer"
+    },
+    "courseColor": {
+      "type": "enumeration",
+      "enum": [
+        "#A3A9FF",
+        "#A5CDB6",
+        "#A19200",
+        "#A000A3"
+      ]
     }
   }
 }
